@@ -2,11 +2,16 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var Problems = require('../models/problem')
+var Quiz = require('../models/quiz');
 
 router.get("/",function(req,res){
-    //pass the list of quiz to this page 
-    //query the quiz from mongodb
-    res.render('home');
+    Quiz.find({},function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            res.render('home',{data: result});
+        }
+    })
 })
 router.get('/questions',function(req,res){
     Problems.find({},function(err,result){
@@ -34,5 +39,15 @@ router.get('/question/edit/:id',function(req,res){
         }
     })
 })
+
+router.get('/quiz/edit/:id',function(req,res){
+    Quiz.findOne({'_id':req.params.id},function(err,result){
+        if(err){
+            res.json({"error":true,"message":err});
+        }else{
+            res.render('editQuiz',{data: result});
+        }
+    })
+});
 
 module.exports = router;

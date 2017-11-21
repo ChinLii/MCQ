@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var Problem = require('../models/problem');
+var Quiz = require('../models/quiz');
 
 router.post('/createQuestion',function(req,res){
     var newProblem = new Problem();
@@ -12,7 +13,7 @@ router.post('/createQuestion',function(req,res){
         if(err){
             res.json(err);
         }else{
-           res.json({"message":"Create Question completely"});
+           res.json({"message":"Create question completely"});
         }
     })
 })
@@ -48,4 +49,15 @@ router.post('/deleteQuestion',function(req,res){
     })
 })
 
+router.post('/createQuiz',function(req,res){
+    var newQuiz = new Quiz();
+    newQuiz.title = req.body.title;
+    newQuiz.save(function(err){
+        if(err){
+            res.json(err);
+        }else{
+            res.json({"message":"Already created quiz"});
+        }
+    })
+})
 module.exports = router;
