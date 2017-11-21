@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var quiz = mongoose.Schema({
-    name: String,
+    title: String,
 });
 
 module.exports = mongoose.model('quiz',quiz);
