@@ -30,10 +30,20 @@ router.post('/editQuestion/',function(req,res){
                     if(err){
                         console.log(err);
                     }else{
-                        res.json({"message":"Already finish"});
+                        res.json({"message":"Already finished!"});
                     }
                 })
             }
+        }
+    })
+})
+
+router.post('/deleteQuestion',function(req,res){
+    Problem.remove({'_id':req.body.id},function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.json({"message":"Already deleted! "});
         }
     })
 })

@@ -163,16 +163,20 @@
             }
             $.post('/api/v1/editQuestion/', data, function (response) {
                 alert(response.message)
-                window.location.replace("/questions");
+                window.location.replace("/questions")
             })
 
         }
         function deleteQuestion(){
-            var id = document.getElementById("id").value
+            var id = "<%= data._id %>"
             var res = confirm("Are you sure?")
+            var data = {
+                "id" : id,
+            }
             if (res == true){
-               $.post('/api/v1/deleteQuestion',data,function(response){
-                   
+               $.post('/api/v1/deleteQuestion/',data,function(response){
+                    alert(response.message)
+                    window.location.replace("/questions")
                })
             }
         }
