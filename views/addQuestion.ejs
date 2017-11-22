@@ -1,0 +1,65 @@
+<% include ./base/header %> 
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-9">
+            <h6>Adding Question to this quiz</h6>
+            <small>Quiz ID :
+                <%= id %>
+            </small>
+        </div>
+
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td scope="col"><b>Title</b></td>
+                        <td scope="col"><b>Action</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0; i< data.length;i++){ %>
+                        <tr>
+                            <td><%= data[i].question %></td>
+                            <td><a href="" onclick="addQuestionToQuiz('<%= data[i]._id%>');">Add</a></td>
+                        </tr>
+                    <%} %>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-3">
+            <a href="/quiz/edit/<%= id %>" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+    <br><br>
+    
+    <script>
+        function addQuestionToQuiz(id){
+            //add question to the quiz 
+            var quizId = '<%= id %>'
+            var data = {
+                'id' : id,
+                'quizId' : quizId,
+            }
+            $.post('/api/v1/addQuestion',data,function(response){
+                if(response.error === false){
+                    location.reload();
+                }
+            })
+
+        }
+    </script>
+    <% include ./base/footer %> 

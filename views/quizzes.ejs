@@ -5,25 +5,25 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-9">
-            <h6>List of question</h6>
+            <h6>List of quizzes</h6>
         </div>
     </div>
     <div class="row">
         <div class="col-md-1">
         </div>
         <div class="col-md-9">
-            <a href="/createQuestion" class="btn btn-primary" role="button">Create question</a>
+            <a href="/createQuiz" class="btn btn-primary" role="button">Create Quiz</a>
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <table id="questionTable" class="display" width="100%">
+            <table id="quizTable" class="display" width="100%">
                 <thead>
                     <tr>
                         <th width="25%">ID</th>
-                        <th width="50%">Question</th>
+                        <th width="50%">Title</th>
                         <th width="25%">Actions</th>
                     </tr>
                 </thead>
@@ -33,10 +33,10 @@
                             <%= data[i]._id %>
                         </td>
                         <td>
-                            <%= data[i].question %>
+                            <%= data[i].title %>
                         </td>
                         <td>
-                            <a href="/question/edit/<%= data[i]._id %>">
+                            <a href="/quiz/edit/<%= data[i]._id %>">
                                 Edit
                             </a>
                         </td>
@@ -56,7 +56,7 @@
     </div>
     <script>
         $(document).ready(function () {
-            $('#questionTable').DataTable();
+            $('#quizTable').DataTable();
         });
     </script>
     <% include ./base/footer %>
