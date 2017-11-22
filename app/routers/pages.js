@@ -1,17 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var Promise = require('promise');
 var Problems = require('../models/problem')
 var Quiz = require('../models/quiz');
 
 router.get('/',function(req,res){
-    Quiz.find({},function(err,result){
+    /*Quiz.find({},function(err,result){
         if(err){
             console.log(err);
         }else{
-            res.render('home',{data:result})
+            res.render('home',{data:result });
         }
-    })
+    })*/
+    res.render('home');
 })
 router.get('/staff',function(req,res){
     res.render('staff');

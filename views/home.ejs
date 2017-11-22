@@ -17,18 +17,17 @@
             <table id="quizTable" class="display" width="100%">
                 <thead>
                     <tr>
-                        <th width="25%">ID</th>
                         <th width="50%">Title</th>
+                        <th width="25%">Number of Question</th>
                         <th width="25%">Actions</th>
                     </tr>
                 </thead>
                 <%  for(var i=0; i< data.length;i++){ %>
                     <tr>
                         <td>
-                            <%= data[i]._id %>
+                            <%= data[i].title %>
                         </td>
                         <td>
-                            <%= data[i].title %>
                         </td>
                         <td>
                             <a href="/quiz/do/<%= data[i]._id %>">
