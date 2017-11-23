@@ -73,7 +73,6 @@
             </select>
         </div>
     </div>
-    <input type="text" class="form-control" id="test" placeholder="test"> 
     <br>
     <div class="row">
         <div class="col-md-1">
@@ -90,7 +89,6 @@
             var choice2 = document.getElementById("choice2").value
             var choice3 = document.getElementById("choice3").value
             var choice4 = document.getElementById("choice4").value
-            var quizId = document.getElementById("test").value
             var e = document.getElementById("correctAnswer")
             var correctAnswer = e.options[e.selectedIndex].value
             var data = {
@@ -102,7 +100,6 @@
                     choice4,
                 ],
                 'correctAnswer': correctAnswer,
-                'quizId' : quizId,
 
             }
             $.post('/api/v1/createQuestion', data, function (response) {

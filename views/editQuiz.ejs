@@ -87,8 +87,10 @@
             })
         }
         function removeQuestionFromQuiz(id) {
+            var quizId = "<%= data._id %>"
             var data = {
                 'id': id,
+                'quizId' : quizId,
             }
             var res = confirm("Remove this question?")
             if (res === true) {
@@ -99,5 +101,6 @@
                 })
             }
         }
+        
     </script>
     <% include ./base/footer %>

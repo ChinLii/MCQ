@@ -61,33 +61,43 @@ router.post('/createQuiz',function(req,res){
         }
     })
 })
-router.post("/removeQuestion",function(req,res){
-    var id = req.body.id;
-    Problem.findOne({'_id':id},function(err,result){
+router.post('/deleteQuiz',function(req,res){
+    Quiz.remove({'_id': req.body.id},function(err){
         if(err){
             console.log(err);
         }else{
-            result.quizId = null
-            result.save(function(err){
+            res.json({"message":"Already deleted! "});
+        }
+    })
+})
+router.post("/removeQuestion",function(req,res){
+    var id = req.body.id;
+    var quizId = req.body.quizId;
+    Quiz.findOne({'_id':quizId},function(err,quiz){
+        if(err){
+            res.json({"error":true});
+        }else{
+            //remove question
+            quiz.problemsId.pull(id);
+            quiz.save(function(err){
                 if(err){
                     res.json({"error":true});
                 }else{
-                    res.json({"error":false});
+                    res.json({"error": false});
                 }
             })
         }
     })
 })
-
 router.post("/addQuestion",function(req,res){
     var quizId = req.body.quizId;
-
-    Problem.findOne({'_id':req.body.id},function(err,result){
+    Quiz.findOne({'_id': quizId},function(err,quiz){
         if(err){
-            console.log(err);
+            res.json({"error":true});
         }else{
-            result.quizId = quizId;
-            result.save(function(err){
+            //add question
+            quiz.problemsId.push(req.body.id);
+            quiz.save(function(err){
                 if(err){
                     res.json({"error":true});
                 }else{

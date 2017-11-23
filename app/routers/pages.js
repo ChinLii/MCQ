@@ -13,7 +13,6 @@ router.get('/',function(req,res){
             res.render('home',{data:result });
         }
     })
-    //res.render('home');
 })
 router.get('/staff',function(req,res){
     res.render('staff');
@@ -60,11 +59,10 @@ router.get('/quiz/edit/:id',function(req,res){
             res.json({"error":true,"message":err});
         }else{
             //problem in quiz
-            Problems.find({'quizId': result._id},function(err,result1){
+            Problems.find({'_id': {$in: result.problemsId}},function(err,result1){
                 if(err){
                     console.log(err);
                 }else{
-                    console.log(result1);
                     res.render('editQuiz',{data: result, problems : result1 });
                 }
             })
@@ -74,24 +72,20 @@ router.get('/quiz/edit/:id',function(req,res){
 
 router.get('/quiz/addQuestion/:id',function(req,res){
     var id = req.params.id;
-    Problems.find({'quizId': {$ne: id}},function(err,result){
+    Quiz.findOne({'_id': id},function(err,quiz){
         if(err){
             console.log(err);
-        }else{
-            res.render("addQuestion",{data: result,id : id});
+        }else{            
+            Problems.find({'_id': {"$nin": quiz.problemsId}},function(err,result){
+                if(err){
+                    console.log(err);
+                }else{
+                    res.render("addQuestion",{data: result,id : id});
+                }
+            })
         }
     })
 })
 
-/*
-find problem which is not contain the quiz id 
- Problems.find({'_id': {$ne: result._id}},function(err,result2){
-                        if(err){
-                            console.log(err);
-                        }else{
-                        }
- })
-
-*/
 
 module.exports = router;

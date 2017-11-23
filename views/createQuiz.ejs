@@ -41,6 +41,7 @@
             }
             $.post("/api/v1/createQuiz",data,function(response){
                 alert(response.message)
+                window.location.replace("/quizzes");
             })
         }
     </script>
