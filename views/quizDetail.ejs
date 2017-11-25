@@ -1,0 +1,29 @@
+<% include ./base/header %>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <h6>Quiz : <%= quiz.title %></h6>
+        <br>
+    </div>
+</div>
+<br>
+<div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <p>Number of questions : <%= problems.length %></p>
+            <br>
+        </div>
+</div>
+<div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <a href="/startQuiz" class="btn btn-primary">Start Quiz</a>
+            <br>
+        </div>
+</div>
+
+
+
+<% include ./base/footer %>

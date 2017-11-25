@@ -86,6 +86,19 @@ router.get('/quiz/addQuestion/:id',function(req,res){
         }
     })
 })
-
+router.get('/quiz/do/:id',function(req,res){
+    var id = req.params.id;
+    Quiz.findOne({'_id': id },function(err,quiz){
+        if(err) console.log(err);
+        else{
+            Problems.find({'_id': {$in: quiz.problemsId}},function(err,problems){
+                if(err)console.log(err);
+                else{
+                    res.render('quizDetail',{problems: problems, quiz: quiz});
+                }
+            })
+        }
+    })
+})
 
 module.exports = router;

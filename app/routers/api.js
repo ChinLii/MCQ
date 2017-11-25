@@ -19,32 +19,34 @@ router.post('/createQuestion',function(req,res){
     })
 })
 
-router.post('/editQuestion/',function(req,res){
-    Problem.findOne({'id':req.body.id},function(err,result){
-        if(err){
-            console.log(err);
-        }else{ 
-            if(result != null){
-                result.question = req.body.question;
-                result.choices = req.body.choices;
-                result.correctAnswer = req.body.correctAnswer;
-                result.save(function(err){
-                    if(err){
-                        console.log(err);
-                    }else{
-                        res.json({"message":"Already finished!"});
-                    }
-                })
-            }
-        }
+router.post('/editQuestion',function(req,res){
+    Problem.update({'_id': req.body.id},{$set: {'question': req.body.question, 'choices': req.body.choices, 'correctAnswer': req.body.correctAnswer}},function(err,result){
+       if(err)console.log(err);
+       else{
+            res.json({"message":"Already finished!"});
+       }
     })
 })
 
 router.post('/deleteQuestion',function(req,res){
+    Quiz.find({'problemsId':req.body.id},function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            for(var i = 0 ; i< result.length;i++){
+                result[i].problemsId.pull(req.body.id)
+                result[i].save(function(err){
+                   if(err)console.log(err);
+                })
+            }
+            
+        }
+    })
     Problem.remove({'_id':req.body.id},function(err){
         if(err){
             console.log(err);
         }else{
+            
             res.json({"message":"Already deleted! "});
         }
     })
@@ -61,12 +63,22 @@ router.post('/createQuiz',function(req,res){
         }
     })
 })
+
+router.post('/editQuiz',function(req,res){
+    Quiz.update({'_id':req.body.id},{$set:{'title':req.body.title}},function(err,result){
+        if(err)console.log(err);
+        else{
+            res.json({"message":"Already finished!"});
+        }
+    })
+})
 router.post('/deleteQuiz',function(req,res){
-    Quiz.remove({'_id': req.body.id},function(err){
+    console.log("delete quiz")
+    Quiz.remove({'_id': req.body.quizId},function(err){
         if(err){
             console.log(err);
         }else{
-            res.json({"message":"Already deleted! "});
+            res.json({"error":false,"message":"Already deleted! "});
         }
     })
 })
@@ -89,6 +101,7 @@ router.post("/removeQuestion",function(req,res){
         }
     })
 })
+
 router.post("/addQuestion",function(req,res){
     var quizId = req.body.quizId;
     Quiz.findOne({'_id': quizId},function(err,quiz){

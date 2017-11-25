@@ -69,7 +69,9 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-3">
+            <button class="btn btn-primary" onclick="removeQuiz();" > Delete </button>
             <a href="/quizzes" class="btn btn-primary">Cancel</a>
+
         </div>
     </div>
 
@@ -78,25 +80,28 @@
             $('#quizList').DataTable();
         });
         function updateQuiz() {
+            var quizId = "<%= data._id %>"
             var title = document.getElementById("quizTitle").value;
             var data = {
+                'id' : quizId,
                 'title': title,
             }
-            $.post("/api/v1/updateQuiz", data, function (response) {
+            $.post("/api/v1/editQuiz", data, function (response) {
                 alert(response.message)
+                window.location.replace("/quizzes")
             })
         }
-        function removeQuestionFromQuiz(id) {
+        function removeQuiz() {
             var quizId = "<%= data._id %>"
             var data = {
-                'id': id,
                 'quizId' : quizId,
             }
-            var res = confirm("Remove this question?")
+            var res = confirm("Remove this quiz?")
             if (res === true) {
-                $.post("/api/v1/removeQuestion", data, function (response) {
+                $.post("/api/v1/deleteQuiz", data, function (response) {
                     if (response.error == false) {
-                        location.reload();
+                        alert(response.message)
+                        window.location.replace("/quizzes")
                     }
                 })
             }
