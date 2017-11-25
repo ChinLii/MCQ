@@ -1,0 +1,53 @@
+<% include ./base/header %>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <p>
+                <%= data.question %>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optradio">&nbsp;
+                    <%= data.choices[0] %>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optradio">&nbsp;
+                    <%= data.choices[1] %>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optradio">&nbsp;
+                    <%= data.choices[2] %>
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optradio">&nbsp;
+                    <%= data.choices[3] %>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary" onclick="nextQuestion();"> Next </button>
+        </div>
+    </div>
+    <script>
+        function nextQuestion(){
+            
+        }
+    </script>
+    <% include ./base/footer %>

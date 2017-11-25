@@ -8,19 +8,16 @@
         <br>
     </div>
 </div>
-<br>
 <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <p>Number of questions : <%= problems.length %></p>
-            <br>
+            <p>Number of question : <%= problems.length %></p>
         </div>
 </div>
 <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <a href="/startQuiz" class="btn btn-primary">Start Quiz</a>
-            <br>
+            <a href="/question/do/<%= problems[0]._id %>" class="btn btn-primary">Start Quiz</a>
         </div>
 </div>
 

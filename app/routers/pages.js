@@ -88,6 +88,7 @@ router.get('/quiz/addQuestion/:id',function(req,res){
 })
 router.get('/quiz/do/:id',function(req,res){
     var id = req.params.id;
+    
     Quiz.findOne({'_id': id },function(err,quiz){
         if(err) console.log(err);
         else{
@@ -99,6 +100,18 @@ router.get('/quiz/do/:id',function(req,res){
             })
         }
     })
+})
+
+router.get('/question/do/:id',function(req,res){
+
+    var id = req.params.id;
+    Problems.findOne({'_id':id},function(err,result){
+        if(err) console.log(err);
+        else{
+            res.render('doProblem',{data : result});
+        }
+    })
+
 })
 
 module.exports = router;
