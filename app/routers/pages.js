@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var Promise = require('promise');
+var cookieSession = require('cookie-session')
 var Problems = require('../models/problem')
 var Quiz = require('../models/quiz');
 
@@ -88,7 +89,7 @@ router.get('/quiz/addQuestion/:id',function(req,res){
 })
 router.get('/quiz/do/:id',function(req,res){
     var id = req.params.id;
-    
+
     Quiz.findOne({'_id': id },function(err,quiz){
         if(err) console.log(err);
         else{
