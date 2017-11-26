@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var Promise = require('promise');
-var cookieSession = require('cookie-session')
-var Problems = require('../models/problem')
+var Problems = require('../models/problem');
 var Quiz = require('../models/quiz');
+var Participant = require('../models/participant');
 
 router.get('/',function(req,res){
     Quiz.find({},function(err,result){
@@ -88,15 +88,27 @@ router.get('/quiz/addQuestion/:id',function(req,res){
     })
 })
 router.get('/quiz/do/:id',function(req,res){
+    req.session.questionList = null;
+    req.session.currentQuestion = null;
+    req.session.maxQuestion = null;
+    req.session.answerList = null;
+    req.session.quiz = null;
     var id = req.params.id;
+    req.session.questionList = [];
+    req.session.answerList = [];
     Quiz.findOne({'_id': id },function(err,quiz){
         if(err) console.log(err);
         else{
+            req.session.quiz = quiz._id;
             Problems.find({'_id': {$in: quiz.problemsId}},function(err,problems){
                 if(err)console.log(err);
                 else{
-                    req.session.currentQuestion = 0;
+                    req.session.currentQuestion = 1;
                     req.session.maxQuestion = problems.length;
+
+                    for(var i=0;i< problems.length;i++){
+                        req.session.questionList.push(problems[i]._id);
+                    }
                     res.render('quizDetail',{problems: problems, quiz: quiz, currentQuestion: req.session.currentQuestion});
                 }
             })
@@ -107,15 +119,36 @@ router.get('/quiz/do/:id',function(req,res){
 router.get('/question/do/:id',function(req,res){
     var currentQuestion = req.session.currentQuestion;
     var maxQuestion =  req.session.maxQuestion;
-    console.log(maxQuestion);
     var id = req.params.id;
     Problems.findOne({'_id':id},function(err,result){
         if(err) console.log(err);
         else{
-            res.render('doProblem',{data : result, maxQuestion : maxQuestion, currentQuestion: currentQuestion});
+            res.render('takeQuestion',{data : result, maxQuestion : maxQuestion, currentQuestion: currentQuestion});
         }
     })
 
 })
+
+router.get("/result/:id",function(req,res){
+    var participantID = req.params.id;
+    Participant.findOne({'_id': participantID},function(err,result){
+        if(err)console.log(err)
+        else{
+            Quiz.findOne({'_id':result.quizId },function(err,quiz){
+                if(err)console.log(err);
+                else{
+                    Problems.find({ '_id': { $in: quiz.problemsId } }, function (err, problems) {
+                        if (err) console.log(err);
+                        else {
+                            res.render('result',{quiz:quiz,problems:problems,result: result})
+                        }
+                    })
+                }
+            })
+        }
+    })
+
+})
+
 
 module.exports = router;
