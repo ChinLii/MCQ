@@ -89,14 +89,15 @@ router.get('/quiz/addQuestion/:id',function(req,res){
 })
 router.get('/quiz/do/:id',function(req,res){
     var id = req.params.id;
-
     Quiz.findOne({'_id': id },function(err,quiz){
         if(err) console.log(err);
         else{
             Problems.find({'_id': {$in: quiz.problemsId}},function(err,problems){
                 if(err)console.log(err);
                 else{
-                    res.render('quizDetail',{problems: problems, quiz: quiz});
+                    req.session.currentQuestion = 0;
+                    req.session.maxQuestion = problems.length;
+                    res.render('quizDetail',{problems: problems, quiz: quiz, currentQuestion: req.session.currentQuestion});
                 }
             })
         }
@@ -104,12 +105,14 @@ router.get('/quiz/do/:id',function(req,res){
 })
 
 router.get('/question/do/:id',function(req,res){
-
+    var currentQuestion = req.session.currentQuestion;
+    var maxQuestion =  req.session.maxQuestion;
+    console.log(maxQuestion);
     var id = req.params.id;
     Problems.findOne({'_id':id},function(err,result){
         if(err) console.log(err);
         else{
-            res.render('doProblem',{data : result});
+            res.render('doProblem',{data : result, maxQuestion : maxQuestion, currentQuestion: currentQuestion});
         }
     })
 

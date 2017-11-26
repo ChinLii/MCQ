@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var app = express();
 var config = require('./config/database.js');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 //connect database
 var promise = mongoose.connect(config.url, {
@@ -24,6 +26,9 @@ app.use(express.static(__dirname+'/public'));
 app.use(bodyParser()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(cookieParser());
+app.use(session({secret: "mcq"}));
 
 //set view using ejs template
 app.set('view engine', 'ejs');
