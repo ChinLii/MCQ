@@ -133,6 +133,12 @@ router.post("/nextQuestion", function (req, res) {
 
 })
 
+router.post("/nextResult",function(req,res){
+    req.session.currentQuestion = req.body.currentQuestion;
+    var questionID = req.session.questionList[req.session.currentQuestion];
+    res.json({"nextQuestionID":questionID});
+})
+
 router.post('/submit',async function (req, res) {
     var score = 0;
     var maxScore = req.session.maxQuestion;

@@ -1,0 +1,84 @@
+<% include ./base/header %>
+    <style>
+        .correctAnswer {
+            background-color: green;
+        }
+
+        .wrongAnswer {
+            background-color: red;
+        }
+    </style>
+    <br>
+    <br>
+    <div class="row">
+        <div class='col-md-1'></div>
+        <div class="col-md-3">
+            Question number:
+            <%= parseInt(currentQuestion) + 1 %> /
+                <%= maxQuestion %>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <p>
+                <%= data.question %>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <% for(var i=0; i < data.choices.length ;i++){ %>
+                <%  if (i === parseInt(userAnswer[currentQuestion]-1)) {%>
+                    <% if (i !== parseInt(data.correctAnswer)-1){ %>
+                        <p class="wrongAnswer">
+                                <%= data.choices[i] %>
+                        </p>
+                    <% } %>
+                    <% if (i === parseInt(data.correctAnswer)-1){ %>
+                        <p class="correctAnswer">
+                                <%= data.choices[i] %>
+                        </p>
+                    <% } %>
+                    <% } else if( i !== parseInt(userAnswer[currentQuestion])-1) {%>
+                        <% if ( i === parseInt(data.correctAnswer)-1) { %>
+                            <p class="correctAnswer">
+                                <%= data.choices[i] %>
+                            </p>
+                        <% } else if( i !== parseInt(data.correctAnswer)-1) { %>
+                        <p> <%= data.choices[i] %></p>
+                        <% } %>
+                    <% } %>
+                <% } %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-6">
+            <% if (parseInt(currentQuestion) === parseInt(maxQuestion)-1) { %>
+                <button class="btn btn-primary" onclick="submit();"> Done </button>
+                <% } else { %>
+                    <button class="btn btn-primary" onclick="nextQuestion();"> Next Question</button>
+                    <% } %>
+        </div>
+    </div>
+    <script>
+        function nextQuestion() {
+            var currentQuestion = '<%= currentQuestion %>';
+            currentQuestion = parseInt(currentQuestion) + 1;
+            var data = {
+                "currentQuestion" : currentQuestion,
+            }
+            $.post("/api/v1/nextResult",data ,function (response) {
+                
+                window.location.replace("/show/" + response.nextQuestionID)
+            })
+        }
+        function submit() {
+            window.location.replace("/");
+        }
+    </script>
+    <% include ./base/footer %>

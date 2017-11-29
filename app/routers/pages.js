@@ -128,27 +128,45 @@ router.get('/question/do/:id',function(req,res){
     })
 
 })
-
 router.get("/result/:id",function(req,res){
+    req.session.userAnswer = null;
+    req.session.currentQuestion = null;
+    req.session.questionList = null;
     var participantID = req.params.id;
+    req.session.currentQuestion = 0;
+    req.session.userAnswer = [];
+    req.session.questionList = [];
     Participant.findOne({'_id': participantID},function(err,result){
         if(err)console.log(err)
         else{
+            req.session.userAnswer = result.answerList;
             Quiz.findOne({'_id':result.quizId },function(err,quiz){
                 if(err)console.log(err);
                 else{
                     Problems.find({ '_id': { $in: quiz.problemsId } }, function (err, problems) {
                         if (err) console.log(err);
                         else {
-                            res.render('result',{quiz:quiz,problems:problems,result: result})
+                            for(var i=0;i< problems.length;i++){
+                                req.session.questionList.push(problems[i]._id);
+                            }
+                            res.render('result',{quiz:quiz,problems:problems,result: result,currentQuestion : req.session.currentQuestion})
                         }
                     })
                 }
             })
         }
     })
-
 })
 
+router.get('/show/:id/',function(req,res){
+    var questionId = req.params.id;
+    Problems.findOne({'_id':questionId},function(err,result){
+        if(err)console.log(err);
+        else{
+            res.render("showAnswer",{data: result,currentQuestion: req.session.currentQuestion, userAnswer: req.session.userAnswer,maxQuestion: req.session.maxQuestion});
+        }
+    })
+
+})
 
 module.exports = router;
