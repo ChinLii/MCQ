@@ -1,4 +1,4 @@
-<% include ./base/header %>
+<% include ./base/headerStaff %>
     <br>
     <br>
     <div class="row">
@@ -31,7 +31,7 @@
     <div class='row'>
         <div class="col-md-1"></div>
         <div class="col-md-3">
-            <a href="/quiz/addQuestion/<%= data._id %>" class="btn btn-primary">Add question</a>
+            <a href="/admin/quiz/addQuestion/<%= data._id %>" class="btn btn-primary">Add question</a>
         </div>
     </div>
     <br>
@@ -70,7 +70,7 @@
         </div>
         <div class="col-md-3">
             <button class="btn btn-primary" onclick="removeQuiz();" > Delete </button>
-            <a href="/quizzes" class="btn btn-primary">Cancel</a>
+            <a href="/admin/quizzes" class="btn btn-primary">Cancel</a>
 
         </div>
     </div>
@@ -88,7 +88,7 @@
             }
             $.post("/api/v1/editQuiz", data, function (response) {
                 alert(response.message)
-                window.location.replace("/quizzes")
+                window.location.replace("/admin/quizzes")
             })
         }
         function removeQuiz() {
@@ -101,7 +101,7 @@
                 $.post("/api/v1/deleteQuiz", data, function (response) {
                     if (response.error == false) {
                         alert(response.message)
-                        window.location.replace("/quizzes")
+                        window.location.replace("/admin/quizzes")
                     }
                 })
             }

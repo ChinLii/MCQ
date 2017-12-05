@@ -1,4 +1,4 @@
-<% include ./base/header %>
+<% include ./base/headerStaff %>
     <br>
     <br>
     <div class="row">
@@ -12,7 +12,7 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-9">
-            <a href="/createQuiz" class="btn btn-primary" role="button">Create Quiz</a>
+            <a href="/admin/createQuiz" class="btn btn-primary" role="button">Create Quiz</a>
         </div>
     </div>
     <br>
@@ -40,7 +40,7 @@
                             <%= data[i].problemsId.length %>
                         </td>
                         <td>
-                            <a href="/quiz/edit/<%= data[i]._id %>">
+                            <a href="/admin/quiz/edit/<%= data[i]._id %>">
                                 Edit
                             </a>
                         </td>
@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-4">
-            <a href="/staff">Back</a>
+            <a href="/admin/staff">Back</a>
         </div>
     </div>
     <script>

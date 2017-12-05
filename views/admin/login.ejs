@@ -1,2 +1,56 @@
 <% include ../base/header %> 
+<br>
+
+<div class="container">
+    <div class="row" style="margin: auto; width: 50%; padding: 5px;">
+        <div class="col-md-11 col-md-offset-11">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Staff Sign In</h4>
+                </div>
+                <div class="panel-body">
+                    <form role="form" name='login' action='/api/v1/login' method='post' onsubmit="return validateForm();">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Username" id="username" name="username" type="username" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" id="password" name="password" type="password" value="">
+                            </div>
+                            <p id='errortext' style="color:red;"></p>
+                            
+                            <!-- Change this to a button or input when using this as a form -->
+                            <input type="submit" class="btn btn-lg btn-success btn-block" style="background-color:cornflowerblue;" value="Login">
+                            <!-- <button type="button" class="btn btn-lg btn-success btn-block" onclick="login();" >Login</button> -->
+                            <br>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if(getCookie('success') === 'false'){
+            document.getElementById('errortext').innerHTML = 'Authentication failed; email or password is incorrect. Try again.';
+        }
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+        function validateForm(){
+            if(document.forms['login']['email'].value === '' ){
+                alert('Please enter your email address');
+                return false;
+            }else if((document.forms['login']['password'].value === '' )){
+                alert('Please enter your password');
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+</script>
 <% include ../base/footer %> 

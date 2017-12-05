@@ -1,4 +1,4 @@
-<% include ./base/header %>
+<% include ./base/headerStaff %>
 <br>
 <br>
 <div class="row">
@@ -34,7 +34,7 @@
     </div>
     <div class="col-md-3">
         <button class="btn btn-primary" onclick="removeTopic();" > Delete </button>
-        <a href="/topics" class="btn btn-primary">Cancel</a>
+        <a href="/admin/topics" class="btn btn-primary">Cancel</a>
 
     </div>
 </div>
@@ -52,7 +52,7 @@
         }
         $.post("/api/v1/editTopic", data, function (response) {
             alert(response.message)
-            window.location.replace("/topics")
+            window.location.replace("/admin/topics")
         })
     }
     function removeTopic() {
@@ -65,7 +65,7 @@
             $.post("/api/v1/deleteTopic", data, function (response) {
                 if (response.error == false) {
                     alert(response.message)
-                    window.location.replace("/topics")
+                    window.location.replace("/admin/topics")
                 }
             })
         }

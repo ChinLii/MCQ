@@ -1,4 +1,4 @@
-<% include ./base/header %>
+<% include ./base/headerStaff %>
 <br>
 <br>
 <div class="row">
@@ -28,7 +28,7 @@
     </div>
     <div class="col-md-3">
         <button onclick="createTopic();" class="btn btn-primary">Submit</button>
-        <a href="/topics" class="btn btn-primary">Cancel</a>
+        <a href="/admin/topics" class="btn btn-primary">Cancel</a>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
         }else{
             $.post("/api/v1/createTopic",data,function(response){
                 alert(response.message)
-                window.location.replace("/topics");
+                window.location.replace("/admin/topics");
             })
         }
     }

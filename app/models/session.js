@@ -9,5 +9,4 @@ var session = mongoose.Schema({
         default: Date.now
     }
 });
-
 module.exports = mongoose.model('session',session);

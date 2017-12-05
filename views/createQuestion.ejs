@@ -1,4 +1,4 @@
-<% include ./base/header %>
+<% include ./base/headerStaff %>
     <br>
     <br>
     <div class="row">
@@ -90,7 +90,7 @@
         </div>
         <div class="col-md-3">
             <button onclick="createQuestion();" class="btn btn-primary">Submit</button>
-            <a href="/questions" class="btn btn-primary">Cancel</a>
+            <a href="/admin/questions" class="btn btn-primary">Cancel</a>
         </div>
     </div>
     <script>
@@ -146,7 +146,7 @@
             } else{
                 $.post('/api/v1/createQuestion', data, function (response) {
                     alert(response.message)
-                    window.location.replace("/questions");
+                    window.location.replace("/admin/questions");
                 })
             }
         }

@@ -1,4 +1,4 @@
-<% include ./base/header %> 
+<% include ./base/headerStaff %> 
     <br>
     <br>
     <div class="row">
@@ -117,7 +117,7 @@
         <div class="col-md-3">
             <button onclick="updateQuestion();" class="btn btn-primary">Update</button>
             <button onclick="deleteQuestion();" class="btn btn-danger">Delete</button>
-            <a href="/questions" class="btn btn-primary">Cancel</a>
+            <a href="/admin/questions" class="btn btn-primary">Cancel</a>
         </div>
     </div>
    
@@ -174,7 +174,7 @@
             } else{
                 $.post('/api/v1/editQuestion/', data, function (response) {
                     alert(response.message)
-                    window.location.replace("/questions")
+                    window.location.replace("/admin/questions")
                 })
             }
 
@@ -188,7 +188,7 @@
             if (res == true){
                $.post('/api/v1/deleteQuestion/',data,function(response){
                     alert(response.message)
-                    window.location.replace("/questions")
+                    window.location.replace("/admin/questions")
                })
             }
         }
