@@ -10,7 +10,7 @@ var Session = require('../models/session');
 var User = require('../models/user');
  
 var auth = function(req,res,next){
-    console.log('Cookie id :' + req.cookies.secret );
+    //console.log('Cookie id :' + req.cookies.secret );
     Session.findOne({'secret':req.cookies.secret },function(err,result){
         if(err){
             console.log(err);
