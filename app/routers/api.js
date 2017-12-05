@@ -4,6 +4,7 @@ var path = require('path');
 var Problem = require('../models/problem');
 var Quiz = require('../models/quiz');
 var Participant = require('../models/participant');
+var Topic = require('../models/topic');
 
 router.post('/createQuestion', function (req, res) {
     var newProblem = new Problem();
@@ -65,6 +66,18 @@ router.post('/createQuiz', function (req, res) {
     })
 })
 
+router.post('/createTopic',function(req,res){
+    var topic = new Topic();
+    topic.title = req.body.title;
+    topic.save(function(err){
+        if(err){
+            res.json(err)
+        }else{
+            res.json({"message":"Already create topic"});
+        }
+    })
+})
+
 router.post('/editQuiz', function (req, res) {
     Quiz.update({ '_id': req.body.id }, { $set: { 'title': req.body.title } }, function (err, result) {
         if (err) console.log(err);
@@ -80,6 +93,23 @@ router.post('/deleteQuiz', function (req, res) {
             console.log(err);
         } else {
             res.json({ "error": false, "message": "Already deleted! " });
+        }
+    })
+})
+router.post("/editTopic",function(req,res){
+    Topic.update({ '_id': req.body.id }, { $set: { 'title': req.body.title } }, function (err, result) {
+        if (err) console.log(err);
+        else {
+            res.json({ "message": "Already finished!" });
+        }
+    })
+})
+router.post('/deleteTopic',function(req,res){
+    Topic.remove({'_id':req.body.id},function(err){
+        if(err){
+            console.log(err);
+        }else{
+            res.json({"error": false,"message":"Already deleted! "});
         }
     })
 })

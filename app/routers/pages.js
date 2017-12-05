@@ -5,7 +5,7 @@ var Promise = require('promise');
 var Problems = require('../models/problem');
 var Quiz = require('../models/quiz');
 var Participant = require('../models/participant');
-
+var Topic = require('../models/topic');
 router.get('/',function(req,res){
     Quiz.find({},function(err,result){
         if(err){
@@ -36,10 +36,21 @@ router.get('/questions',function(req,res){
         }
     })
 })
+router.get('/topics',function(req,res){
+    Topic.find({},function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            res.render('topics',{data: result});
+        }
+    })
+})
 router.get('/createQuestion',function(req,res){
     res.render('createQuestion');
 })
-
+router.get('/createTopic',function(req,res){
+    res.render('createTopic');
+})
 router.get('/createQuiz',function(req,res){
     res.render('createQuiz');
 })
@@ -50,6 +61,16 @@ router.get('/question/edit/:id',function(req,res){
             res.json({"error":true,"message":err});
         }else{
             res.render('editQuestion',{data: result});
+        }
+    })
+})
+
+router.get('/topic/edit/:id',function(req,res){
+    Topic.findOne({'_id':req.params.id},function(err,result){
+        if(err){
+            res.json({"error":true,"message":err});
+        }else{
+            res.render('editTopic',{data: result})
         }
     })
 })

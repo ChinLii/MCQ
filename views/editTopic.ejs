@@ -1,0 +1,75 @@
+<% include ./base/header %>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-9">
+        <h6>Edit Topic</h6>
+        <small>ID :
+            <%= data._id %>
+        </small>
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-1">
+        <label>Topic Title</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="topicTitle" placeholder="Topic Title" value="<%=data.title %>">
+    </div>
+    <div class="col-md-5">
+        <button onclick="updateTopic();" class="btn btn-primary">Submit</button>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-3">
+        <button class="btn btn-primary" onclick="removeTopic();" > Delete </button>
+        <a href="/topics" class="btn btn-primary">Cancel</a>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#quizList').DataTable();
+    });
+    function updateTopic() {
+        var topicId = "<%= data._id %>"
+        var title = document.getElementById("topicTitle").value;
+        var data = {
+            'id' : topicId,
+            'title': title,
+        }
+        $.post("/api/v1/editTopic", data, function (response) {
+            alert(response.message)
+            window.location.replace("/topics")
+        })
+    }
+    function removeTopic() {
+        var topicId = "<%= data._id %>"
+        var data = {
+            'id' : topicId,
+        }
+        var res = confirm("Remove this topic?")
+        if (res === true) {
+            $.post("/api/v1/deleteTopic", data, function (response) {
+                if (response.error == false) {
+                    alert(response.message)
+                    window.location.replace("/topics")
+                }
+            })
+        }
+    }
+    
+</script>
+<% include ./base/footer %>

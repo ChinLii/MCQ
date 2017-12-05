@@ -1,0 +1,53 @@
+<% include ./base/header %>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-9">
+        <h6>Create Topic</h6>
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-2">
+        <label>Topic Title</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+        <input type="text" class="form-control" id="topicTitle" placeholder="Topic Title">
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-3">
+        <button onclick="createTopic();" class="btn btn-primary">Submit</button>
+        <a href="/topics" class="btn btn-primary">Cancel</a>
+    </div>
+</div>
+
+
+<script>
+    function createTopic(){
+        var title = document.getElementById("topicTitle").value;
+        var data = {
+            'title':title,
+        }
+        if (title === ""){
+            alert("Please fill in all information")
+        }else{
+            $.post("/api/v1/createTopic",data,function(response){
+                alert(response.message)
+                window.location.replace("/topics");
+            })
+        }
+    }
+</script>
+
+<% include ./base/footer %> 

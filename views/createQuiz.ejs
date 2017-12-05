@@ -39,10 +39,14 @@
             var data = {
                 'title':title,
             }
-            $.post("/api/v1/createQuiz",data,function(response){
-                alert(response.message)
-                window.location.replace("/quizzes");
-            })
+            if (title === ""){
+                alert("Please fill in all information")
+            }else{
+                $.post("/api/v1/createQuiz",data,function(response){
+                    alert(response.message)
+                    window.location.replace("/quizzes");
+                })
+            }
         }
     </script>
     <% include ./base/footer %> 

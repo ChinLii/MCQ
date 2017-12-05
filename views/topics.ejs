@@ -1,0 +1,62 @@
+<% include ./base/header %>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-9">
+            <h6>List of Topic</h6>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-9">
+            <a href="/createTopic" class="btn btn-primary" role="button">Create Topic</a>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <table id="topicTable" class="display" width="100%">
+                <thead>
+                    <tr>
+                        <th width="25%">ID</th>
+                        <th width="25%">Title</th>
+                        <th width="25%">Actions</th>
+                    </tr>
+                </thead>
+                <%  for(var i=0; i< data.length;i++){ %>
+                    <tr>
+                        <td>
+                            <%= data[i]._id %>
+                        </td>
+                        <td>
+                            <%= data[i].title %>
+                        </td>
+                        <td>
+                            <a href="/topic/edit/<%= data[i]._id %>">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                    <% } %>
+            </table>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+            <a href="/staff">Back</a>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#topicTable').DataTable();
+        });
+    </script>
+    <% include ./base/footer %>
