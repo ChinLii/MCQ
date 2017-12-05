@@ -5,6 +5,21 @@ var Problem = require('../models/problem');
 var Quiz = require('../models/quiz');
 var Participant = require('../models/participant');
 var Topic = require('../models/topic');
+var User = require('../models/user');
+
+//sign up admin
+router.post('/signup',function(req,res){
+    var newUser = new User();
+    newUser.username = req.body.username;
+    newUser.password = newUser.generateHash(req.body.password);
+    newUser.save(function(err){
+        if(err){console.log(err)}
+        else{
+            res.json({"message": "Create account !!!! "});
+        }
+    })
+})
+
 
 router.post('/createQuestion', function (req, res) {
     var newProblem = new Problem();

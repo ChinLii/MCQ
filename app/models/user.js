@@ -14,3 +14,5 @@ user.methods.generateHash = function(password){
 user.methods.validPassword = function(password){
     return bcrypt.compareSync(password,this.password);
 }
+
+module.exports = mongoose.model('user',user);
