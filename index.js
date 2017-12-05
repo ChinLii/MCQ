@@ -19,6 +19,7 @@ var port = process.env.PORT || 3000;
 //import router
 var pages = require('./app/routers/pages');
 var api = require('./app/routers/api');
+var adminPages = require('./app/routers/adminPages');
 //set path public to access asset file
 app.use(express.static(__dirname+'/public'));
 
@@ -36,6 +37,7 @@ app.set('view engine', 'ejs');
 //define path map to router
 app.use('/',pages);
 app.use('/api/v1/',api);
+app.use('/admin/',adminPages);
 
 //run app on the port 
 app.listen(port);

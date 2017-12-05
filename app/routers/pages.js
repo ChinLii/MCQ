@@ -202,4 +202,8 @@ router.get('/show/:id/',function(req,res){
 
 })
 
+router.get('/login',function(req,res){
+    res.render('admin/login');
+})
+
 module.exports = router;
