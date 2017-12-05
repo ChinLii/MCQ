@@ -23,7 +23,8 @@
                 <thead>
                     <tr>
                         <th width="25%">ID</th>
-                        <th width="50%">Question</th>
+                        <th width="25%">Question</th>
+                        <th width="25%">Topic</th>
                         <th width="25%">Actions</th>
                     </tr>
                 </thead>
@@ -34,6 +35,9 @@
                         </td>
                         <td>
                             <%= data[i].question %>
+                        </td>
+                        <td>
+                            <%= data[i].topics %>
                         </td>
                         <td>
                             <a href="/question/edit/<%= data[i]._id %>">

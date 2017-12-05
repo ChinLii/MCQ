@@ -21,6 +21,7 @@
                 <thead>
                     <tr>
                         <td scope="col"><b>Title</b></td>
+                        <td scope="col"><b>Topic</b></td>
                         <td scope="col"><b>Action</b></td>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                     <% for(var i=0; i< data.length;i++){ %>
                         <tr>
                             <td><%= data[i].question %></td>
+                            <td><%= data[i].topics %></td>
                             <td><a href="" onclick="addQuestionToQuiz('<%= data[i]._id%>');">Add</a></td>
                         </tr>
                     <%} %>

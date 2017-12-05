@@ -29,10 +29,10 @@
             <div class="col-md-6">
                 <select id="select_topic" multiple="multiple">
                     <% for (var i=0; i< topics.length ; i++){  %>
-                        <% if (data.topics.indexOf(topics[i]._id) > -1) { %>
-                            <option value="<%= topics[i]._id %>" selected="selected"><%= topics[i].title %></option>
+                        <% if (data.topics.indexOf(topics[i].title) > -1) { %>
+                            <option value="<%= topics[i].title %>" selected="selected"><%= topics[i].title %></option>
                         <% } else { %>
-                        <option value="<%= topics[i]._id %>"><%= topics[i].title %></option>
+                        <option value="<%= topics[i].title %>"><%= topics[i].title %></option>
                     <% }
                     }%>
                 </select>
@@ -146,7 +146,6 @@
             var e = document.getElementById("correctAnswer")
             var correctAnswer = e.options[e.selectedIndex].value
             var topics = selected;
-            alert(selected);
             var data = {
                 'id' : id,
                 'question': question,
