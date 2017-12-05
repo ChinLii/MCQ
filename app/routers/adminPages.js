@@ -26,7 +26,7 @@ var auth = function(req,res,next){
 };
 
 router.get('/staff',auth,function(req,res){
-    res.render('staff');
+    res.render('admin/staff');
 })
 
 router.get("/quizzes",auth,function(req,res){
@@ -34,7 +34,7 @@ router.get("/quizzes",auth,function(req,res){
         if(err){
             console.log(err);
         }else{
-            res.render('quizzes',{data: result});
+            res.render('admin/quizzes',{data: result});
         }
     })
 })
@@ -43,7 +43,7 @@ router.get('/questions',auth,function(req,res){
         if(err){
             console.log(err);
         }else{
-            res.render('questions',{data: result});
+            res.render('admin/questions',{data: result});
         }
     })
 })
@@ -52,7 +52,7 @@ router.get('/topics',auth,function(req,res){
         if(err){
             console.log(err);
         }else{
-            res.render('topics',{data: result});
+            res.render('admin/topics',{data: result});
         }
     })
 })
@@ -62,15 +62,15 @@ router.get('/createQuestion',auth,function(req,res){
         if(err){
             console.log(err);
         }else{
-            res.render('createQuestion',{data: result});
+            res.render('admin/createQuestion',{data: result});
         }
     })
 })
 router.get('/createTopic',auth,function(req,res){
-    res.render('createTopic');
+    res.render('admin/createTopic');
 })
 router.get('/createQuiz',auth,function(req,res){
-    res.render('createQuiz');
+    res.render('admin/createQuiz');
 })
 
 router.get('/question/edit/:id',auth,function(req,res){
@@ -82,7 +82,7 @@ router.get('/question/edit/:id',auth,function(req,res){
                 if(err){
                     res.json({"error": true,"message":err});
                 }else{
-                    res.render('editQuestion',{data: result,topics : topics});
+                    res.render('admin/editQuestion',{data: result,topics : topics});
                 }
             })
         }
@@ -94,7 +94,7 @@ router.get('/topic/edit/:id',auth,function(req,res){
         if(err){
             res.json({"error":true,"message":err});
         }else{
-            res.render('editTopic',{data: result})
+            res.render('admin/editTopic',{data: result})
         }
     })
 })
@@ -109,7 +109,7 @@ router.get('/quiz/edit/:id',auth,function(req,res){
                 if(err){
                     console.log(err);
                 }else{
-                    res.render('editQuiz',{data: result, problems : result1 });
+                    res.render('admin/editQuiz',{data: result, problems : result1 });
                 }
             })
         }
@@ -126,7 +126,7 @@ router.get('/quiz/addQuestion/:id',auth,function(req,res){
                 if(err){
                     console.log(err);
                 }else{
-                    res.render("addQuestion",{data: result,id : id});
+                    res.render("admin/addQuestion",{data: result,id : id});
                 }
             })
         }
