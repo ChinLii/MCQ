@@ -34,21 +34,21 @@
                 <%  if (i === parseInt(userAnswer[currentQuestion]-1)) {%>
                     <% if (i !== parseInt(data.correctAnswer)-1){ %>
                         <p class="wrongAnswer">
-                                <%= data.choices[i] %>
+                              <%= i+1 %>) <%= data.choices[i] %>
                         </p>
                     <% } %>
                     <% if (i === parseInt(data.correctAnswer)-1){ %>
                         <p class="correctAnswer">
-                                <%= data.choices[i] %>
+                                <%= i+1 %>)   <%= data.choices[i] %>
                         </p>
                     <% } %>
                     <% } else if( i !== parseInt(userAnswer[currentQuestion])-1) {%>
                         <% if ( i === parseInt(data.correctAnswer)-1) { %>
                             <p class="correctAnswer">
-                                <%= data.choices[i] %>
+                                    <%= i+1 %>) <%= data.choices[i] %>
                             </p>
                         <% } else if( i !== parseInt(data.correctAnswer)-1) { %>
-                        <p> <%= data.choices[i] %></p>
+                        <p> <%= i+1 %>)  <%= data.choices[i] %></p>
                         <% } %>
                     <% } %>
                 <% } %>
