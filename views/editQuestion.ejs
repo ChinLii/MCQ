@@ -25,6 +25,21 @@
     </div>
     <br>
     <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-6">
+                <select id="select_topic" multiple="multiple">
+                    <% for (var i=0; i< topics.length ; i++){  %>
+                        <% if (data.topics.indexOf(topics[i]._id) > -1) { %>
+                            <option value="<%= topics[i]._id %>" selected="selected"><%= topics[i].title %></option>
+                        <% } else { %>
+                        <option value="<%= topics[i]._id %>"><%= topics[i].title %></option>
+                    <% }
+                    }%>
+                </select>
+            </div>
+        </div>
+        <br>
+    <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-1">
             <label>1</label>
@@ -107,6 +122,20 @@
     </div>
    
     <script>
+        var selected
+        $(document).ready(function () {
+            $('#select_topic').multiselect({
+                enableFiltering: true,
+                buttonWidth: '250',
+                onChange: function(element, checked) {
+                    var brands = $('#select_topic option:selected');
+                    selected = [];
+                    $(brands).each(function(index, brand){
+                        selected.push($(this).val());
+                    });
+                }
+            });
+        });
         function updateQuestion() {
             var id = "<%= data._id %>"
             var question = document.getElementById("question").value
@@ -116,6 +145,8 @@
             var choice4 = document.getElementById("choice4").value
             var e = document.getElementById("correctAnswer")
             var correctAnswer = e.options[e.selectedIndex].value
+            var topics = selected;
+            alert(selected);
             var data = {
                 'id' : id,
                 'question': question,
@@ -126,11 +157,27 @@
                     choice4,
                 ],
                 'correctAnswer': correctAnswer,
+                'topics' : topics,
             }
-            $.post('/api/v1/editQuestion/', data, function (response) {
-                alert(response.message)
-                window.location.replace("/questions")
-            })
+            if (question === "") {
+                alert("Please fill in all information")
+            } else if (choice1 === "") {
+                alert("Please fill in all information")
+            } else if (choice2 === "") {
+                alert("Please fill in all information")
+            }
+            else if (choice3 === "") {
+                alert("Please fill in all information")
+            } else if (choice4 === "") {
+                alert("Please fill in all information")
+            } else if(topics === undefined){
+                alert("Please select at least one Topic")
+            } else{
+                $.post('/api/v1/editQuestion/', data, function (response) {
+                    alert(response.message)
+                    window.location.replace("/questions")
+                })
+            }
 
         }
         function deleteQuestion(){

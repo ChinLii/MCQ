@@ -12,6 +12,7 @@ router.post('/createQuestion', function (req, res) {
     newProblem.correctAnswer = req.body.correctAnswer;
     newProblem.choices = req.body.choices;
     newProblem.quizId = req.body.quizId;
+    newProblem.topics = req.body.topics;
     newProblem.save(function (err, problem) {
         if (err) {
             res.json(err);
@@ -22,7 +23,7 @@ router.post('/createQuestion', function (req, res) {
 })
 
 router.post('/editQuestion', function (req, res) {
-    Problem.update({ '_id': req.body.id }, { $set: { 'question': req.body.question, 'choices': req.body.choices, 'correctAnswer': req.body.correctAnswer } }, function (err, result) {
+    Problem.update({ '_id': req.body.id }, { $set: { 'question': req.body.question, 'choices': req.body.choices, 'correctAnswer': req.body.correctAnswer ,'topics':req.body.topics}}, function (err, result) {
         if (err) console.log(err);
         else {
             res.json({ "message": "Already finished!" });

@@ -46,7 +46,14 @@ router.get('/topics',function(req,res){
     })
 })
 router.get('/createQuestion',function(req,res){
-    res.render('createQuestion');
+    Topic.find({},function(err,result){
+        if(err){
+            console.log(err);
+        }else{
+            console.log(result);
+            res.render('createQuestion',{data: result});
+        }
+    })
 })
 router.get('/createTopic',function(req,res){
     res.render('createTopic');
@@ -60,7 +67,13 @@ router.get('/question/edit/:id',function(req,res){
         if(err){
             res.json({"error":true,"message":err});
         }else{
-            res.render('editQuestion',{data: result});
+            Topic.find({},function(err,topics){
+                if(err){
+                    res.json({"error": true,"message":err});
+                }else{
+                    res.render('editQuestion',{data: result,topics : topics});
+                }
+            })
         }
     })
 })
