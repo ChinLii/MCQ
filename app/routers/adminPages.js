@@ -133,4 +133,7 @@ router.get('/quiz/addQuestion/:id',auth,function(req,res){
     })
 })
 
+router.get('/analysisData',auth,function(req,res){
+    res.render("admin/visualization");
+})
 module.exports = router;
