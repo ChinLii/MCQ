@@ -1,3 +1,6 @@
+/*
+Web service for this application 
+*/
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -8,11 +11,10 @@ var Participant = require('../models/participant');
 var Topic = require('../models/topic');
 var User = require('../models/user');
 var Session = require('../models/session');
+
 //sign up admin
 //encapsulate from user
-//username : admin
-//password : admin
-router.post('/signup',function(req,res){
+/*router.post('/signup',function(req,res){
     var newUser = new User();
     newUser.username = req.body.username;
     newUser.password = newUser.generateHash(req.body.password);
@@ -22,7 +24,9 @@ router.post('/signup',function(req,res){
             res.json({"message": "Create account !!!! "});
         }
     })
-})
+})*/
+
+//login function 
 router.post('/login',function(req,res){
     var session = new Session();
     User.findOne({ 'username': req.body.username }, function (err, user) {
@@ -66,7 +70,7 @@ router.post('/login',function(req,res){
         }
     })
 })
-
+//logout function
 router.get('/logout', function (req, res) {
     Session.remove({ 'secret': req.cookies.secret }, function (err) {
         if (err) {
@@ -79,6 +83,7 @@ router.get('/logout', function (req, res) {
     });
 });
 
+//create question
 router.post('/createQuestion', function (req, res) {
     var newProblem = new Problem();
     newProblem.question = req.body.question;
@@ -95,6 +100,7 @@ router.post('/createQuestion', function (req, res) {
     })
 })
 
+//Edit question 
 router.post('/editQuestion', function (req, res) {
     Problem.update({ '_id': req.body.id }, { $set: { 'question': req.body.question, 'choices': req.body.choices, 'correctAnswer': req.body.correctAnswer ,'topics':req.body.topics}}, function (err, result) {
         if (err) console.log(err);
@@ -104,6 +110,7 @@ router.post('/editQuestion', function (req, res) {
     })
 })
 
+//Delete question
 router.post('/deleteQuestion', function (req, res) {
     Quiz.find({ 'problemsId': req.body.id }, function (err, result) {
         if (err) {
@@ -128,6 +135,7 @@ router.post('/deleteQuestion', function (req, res) {
     })
 })
 
+//Create quiz
 router.post('/createQuiz', function (req, res) {
     var newQuiz = new Quiz();
     newQuiz.title = req.body.title;
@@ -140,6 +148,29 @@ router.post('/createQuiz', function (req, res) {
     })
 })
 
+//Edit quiz
+router.post('/editQuiz', function (req, res) {
+    Quiz.update({ '_id': req.body.id }, { $set: { 'title': req.body.title } }, function (err, result) {
+        if (err) console.log(err);
+        else {
+            res.json({ "message": "Already finished!" });
+        }
+    })
+})
+
+//Delete Quiz
+router.post('/deleteQuiz', function (req, res) {
+    console.log("delete quiz")
+    Quiz.remove({ '_id': req.body.quizId }, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json({ "error": false, "message": "Already deleted! " });
+        }
+    })
+})
+
+//Create topic
 router.post('/createTopic',function(req,res){
     var topic = new Topic();
     topic.title = req.body.title;
@@ -152,24 +183,7 @@ router.post('/createTopic',function(req,res){
     })
 })
 
-router.post('/editQuiz', function (req, res) {
-    Quiz.update({ '_id': req.body.id }, { $set: { 'title': req.body.title } }, function (err, result) {
-        if (err) console.log(err);
-        else {
-            res.json({ "message": "Already finished!" });
-        }
-    })
-})
-router.post('/deleteQuiz', function (req, res) {
-    console.log("delete quiz")
-    Quiz.remove({ '_id': req.body.quizId }, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json({ "error": false, "message": "Already deleted! " });
-        }
-    })
-})
+//Edit topic
 router.post("/editTopic",function(req,res){
     Topic.update({ '_id': req.body.id }, { $set: { 'title': req.body.title } }, function (err, result) {
         if (err) console.log(err);
@@ -178,6 +192,7 @@ router.post("/editTopic",function(req,res){
         }
     })
 })
+//Remove topic
 router.post('/deleteTopic',function(req,res){
     Topic.remove({'_id':req.body.id},function(err){
         if(err){
@@ -187,6 +202,8 @@ router.post('/deleteTopic',function(req,res){
         }
     })
 })
+
+//Remove question
 router.post("/removeQuestion", function (req, res) {
     var id = req.body.id;
     var quizId = req.body.quizId;
@@ -207,6 +224,7 @@ router.post("/removeQuestion", function (req, res) {
     })
 })
 
+//add question to quiz
 router.post("/addQuestion", function (req, res) {
     var quizId = req.body.quizId;
     Quiz.findOne({ '_id': quizId }, function (err, quiz) {
@@ -226,9 +244,8 @@ router.post("/addQuestion", function (req, res) {
     })
 })
 
+//update current question 
 router.post("/nextQuestion", function (req, res) {
-    //update something with session
-    //store the answer of user into session
     req.session.currentQuestion++;
     req.session.answerList.push(req.body.answer);
     var current = req.session.currentQuestion - 1;
@@ -237,12 +254,14 @@ router.post("/nextQuestion", function (req, res) {
 
 })
 
+//update current show result 
 router.post("/nextResult",function(req,res){
     req.session.currentQuestion = req.body.currentQuestion;
     var questionID = req.session.questionList[req.session.currentQuestion];
     res.json({"nextQuestionID":questionID});
 })
 
+//submit the quiz
 router.post('/submit',async function (req, res) {
     var score = 0;
     var maxScore = req.session.maxQuestion;
@@ -263,7 +282,17 @@ router.post('/submit',async function (req, res) {
             listProblems = problems;
             for (var i = 0; i < problems.length; i++) {
                 if (userAnswers[i] === problems[i].correctAnswer) {
+                    problems[i].numberOfCorrect += 1
+                    problems[i].numberOfTaken += 1
+                    problems[i].save(function(err){
+                        if(err)console.log(err);
+                    })
                     score ++;
+                }else{
+                    problems[i].numberOfTaken += 1;
+                    problems[i].save(function(err){
+                        if(err)console.log(err);
+                    })
                 }
             }
         }

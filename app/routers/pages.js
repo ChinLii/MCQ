@@ -1,3 +1,7 @@
+/*
+Page render for normal user
+
+*/
 var express = require('express');
 var router = express.Router();
 var path = require('path');
@@ -6,6 +10,7 @@ var Problems = require('../models/problem');
 var Quiz = require('../models/quiz');
 var Participant = require('../models/participant');
 var Topic = require('../models/topic');
+//render the home page
 router.get('/',function(req,res){
     Quiz.find({},function(err,result){
         if(err){
@@ -16,6 +21,7 @@ router.get('/',function(req,res){
     })
 })
 
+//render the quiz detail by id 
 router.get('/quiz/do/:id',function(req,res){
     req.session.questionList = null;
     req.session.currentQuestion = null;
@@ -45,6 +51,7 @@ router.get('/quiz/do/:id',function(req,res){
     })
 })
 
+//render the question by id
 router.get('/question/do/:id',function(req,res){
     var currentQuestion = req.session.currentQuestion;
     var maxQuestion =  req.session.maxQuestion;
@@ -57,6 +64,8 @@ router.get('/question/do/:id',function(req,res){
     })
 
 })
+
+//render the result of user
 router.get("/result/:id",function(req,res){
     req.session.userAnswer = null;
     req.session.currentQuestion = null;
@@ -87,6 +96,7 @@ router.get("/result/:id",function(req,res){
     })
 })
 
+//render each result of each question by id
 router.get('/show/:id/',function(req,res){
     var questionId = req.params.id;
     Problems.findOne({'_id':questionId},function(err,result){
@@ -98,6 +108,7 @@ router.get('/show/:id/',function(req,res){
 
 })
 
+//login page 
 router.get('/login',function(req,res){
     res.render('admin/login');
 })
