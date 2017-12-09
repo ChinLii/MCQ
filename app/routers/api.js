@@ -202,7 +202,7 @@ router.post('/deleteTopic',function(req,res){
     })
 })
 
-//Remove question
+//Remove question from the quiz
 router.post("/removeQuestion", function (req, res) {
     var id = req.body.id;
     var quizId = req.body.quizId;
