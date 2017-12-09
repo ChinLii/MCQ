@@ -89,7 +89,6 @@ router.post('/createQuestion', function (req, res) {
     newProblem.question = req.body.question;
     newProblem.correctAnswer = req.body.correctAnswer;
     newProblem.choices = req.body.choices;
-    newProblem.quizId = req.body.quizId;
     newProblem.topics = req.body.topics;
     newProblem.save(function (err, problem) {
         if (err) {
