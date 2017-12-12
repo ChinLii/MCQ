@@ -18,12 +18,13 @@
         data = {
             label : 'Percentage of participant choose the right answer per each topic %' ,
             data : convertTopicpercentage,
+            backgroundColor: ['#F7464A','#4D5360','#949FB1','#D4CCC5','#E2EAE9','#F7464A'],
         };
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels : convertListTopics,
-                datasets: [data]
+                datasets: [data],
             },
             
         });
