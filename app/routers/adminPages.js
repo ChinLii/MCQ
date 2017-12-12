@@ -154,22 +154,82 @@ router.get('/quiz/addQuestion/:id',auth,function(req,res){
 })
 
 //render the visualization page 
-router.get('/analysisData',auth,async function(req,res){
-    var listCorrect = [];
-    var listTaken = [];
-    var listTitle = [];
+router.get('/ratioCorrectAndIncorrect',auth,async function(req,res){
+    var totalCorrect = 0
+    var totalTaken = 0
     await Problems.find({},function(err,result){
         if(err){
             console.log(err);
         }else{
-            for(var i=0; i<result.length; i++){
-                listTitle.push(result[i]._id);
-                listTaken.push(result[i].numberOfTaken);
-                listCorrect.push(result[i].numberOfCorrect);
+            for(let i=0; i<result.length; i++){
+               
+                totalCorrect += result[i].numberOfCorrect
+                totalTaken += result[i].numberOfTaken
+              
             }
-           
         }
     })
-    res.render("admin/visualization",{listTitle: listTitle, listTaken:listTaken, listCorrect: listCorrect});
+    percentageCorrect = ((totalCorrect/totalTaken)* 100).toFixed(2);
+    console.log(percentageCorrect)
+    res.render("admin/visualization_1",{percentageCorrect:percentageCorrect});
 })
+
+router.get('/percentageByTopic',auth,async function(req,res){
+    var listTopics = []
+    var problemList = []
+    var topicPercentage = []
+    await Topic.find({},function(err,result){
+        if(err)console.log(err)
+        for(let i = 0;i<result.length;i++){
+            listTopics.push(result[i].title)
+        }
+    })
+    for (let i =0; i < listTopics.length ; i++){
+        await Problems.find({'topics': listTopics[i]},function(err,problems){
+            problemList.push(problems)
+        })
+    }
+    for(let i = 0; i < problemList.length ; i++){
+        var sumCorrect = 0
+        var sumTaken = 0;
+        for(let j =0;j < problemList[i].length ; j++){
+            sumCorrect += problemList[i][j].numberOfCorrect 
+            sumTaken += problemList[i][j].numberOfTaken 
+           
+        } 
+        if(sumTaken === 0){
+            topicPercentage.push(0)
+        }else{
+            topicPercentage.push(((sumCorrect/sumTaken)* 100).toFixed(2))
+        }
+    }
+    res.render("admin/visualization_2",{listTopics: listTopics,topicPercentage: topicPercentage})
+
+})
+router.get('/numberParticipant',auth,async function(req,res){
+    var listTopics = []
+    var problemList = []
+    var listNumberOfTaken = []
+    await Topic.find({},function(err,result){
+        if(err)console.log(err)
+        for(let i = 0;i<result.length;i++){
+            listTopics.push(result[i].title)
+        }
+    })
+    for (let i =0; i < listTopics.length ; i++){
+        await Problems.find({'topics': listTopics[i]},function(err,problems){
+            problemList.push(problems)
+        })
+    }
+    for(let i = 0; i < problemList.length ; i++){
+        var sumTaken = 0;
+        for(let j =0;j < problemList[i].length ; j++){
+            sumTaken += problemList[i][j].numberOfTaken 
+        }
+        listNumberOfTaken.push(sumTaken)
+    }
+    res.render("admin/visualization_3",{listTopics:listTopics,listNumberOfTaken:listNumberOfTaken})
+})
+
+
 module.exports = router;

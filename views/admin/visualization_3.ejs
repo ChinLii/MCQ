@@ -1,0 +1,39 @@
+<% include ../base/headerStaff %>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.18/c3.css" rel="stylesheet">
+    <br>
+    <br>
+    <canvas id="myChart" width="1500" height="700"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script>
+        var listTopics = '<%= listTopics %>'
+        var listNumberOfTaken = '<%= listNumberOfTaken %>'
+        var convertListTopics = listTopics.split(",")
+        var convertListNumberOfTaken = listNumberOfTaken.split(",")
+        for(let i =0;i<convertListNumberOfTaken.length;i++){
+            convertListNumberOfTaken[i] = parseFloat(convertListNumberOfTaken[i])
+        }
+        var ctx = document.getElementById("myChart").getContext('2d');
+        data = {
+            datasets: [{
+                data: convertListNumberOfTaken,
+                backgroundColor : ["#55FF5C","#FD2843",'#4D5360','#949FB1','#D4CCC5','#E2EAE9','#F7464A','#4D5360','#949FB1','#D4CCC5','#E2EAE9','#F7464A'],
+            }],
+           
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: convertListTopics
+            
+        };
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: {
+                title: {
+                    display: true,
+                    text: 'Number of participants for each topic.'
+                }
+            }
+        });
+
+    </script>
+    <% include ../base/footer %>
