@@ -102,6 +102,26 @@
                     if (response.error == false) {
                         alert(response.message)
                         window.location.replace("/admin/quizzes")
+                    }else{
+                        alert(response.message)
+                    }
+                })
+            }
+        }
+        function removeQuestionFromQuiz(id){
+            var quizId = "<%= data._id %>"
+            var data = {
+                'quizId' : quizId,
+                'id' : id
+            }
+            var res = confirm("Remove this question?")
+            if (res === true) {
+                $.post("/api/v1/removeQuestion", data, function (response) {
+                    if (response.error == false) {
+                        alert(response.message)
+                        location.reload();
+                    }else{
+                        location.reload();
                     }
                 })
             }
